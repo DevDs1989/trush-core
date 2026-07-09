@@ -8,6 +8,10 @@
   "files": [
     "dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevDs1989/trush-core.git"
+  },
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
