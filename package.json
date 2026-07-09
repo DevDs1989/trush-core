@@ -1,0 +1,28 @@
+{
+  "name": "@devds1989/trush-core",
+  "version": "1.0.0",
+  "description": "Core engine for t-rush and t-rush-mcp.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "tsup"
+  },
+  "author": "Devesh",
+  "license": "MIT",
+  "dependencies": {
+    "fast-glob": "^3.3.3",
+    "ignore": "^7.0.5",
+    "fuse.js": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.6.0"
+  }
+}
