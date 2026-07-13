@@ -18,9 +18,9 @@ const ALWAYS_IGNORE = [
 ];
 
 const TODO_REGEX =
-  /(?:\/\/|#|--|%|;|\*)\s*(?:TODO|FIXME|HACK|BUG|XXX)(?:\(.*?\))?[:\s]+(.+)/i;
+  /(?:\/\/|#|--|%|;|\*)\s*(?:TODO|FIXME)(?:\(.*?\))?[:\s]+(.+)/i;
 
-const TODO_TYPE_REGEX = /(?:TODO|FIXME|HACK|BUG|XXX)/i;
+const TODO_TYPE_REGEX = /(?:TODO|FIXME)/i;
 
 function getAuthor(filePath: string, line: number, cwd: string): string | undefined {
   try {

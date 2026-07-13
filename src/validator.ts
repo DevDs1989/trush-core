@@ -2,7 +2,7 @@ import fs from "fs";
 import { CommentType } from "./types/types.js";
 import { ValidationResult } from "./types/types.js";
 
-const COMMENT_REGEX = /(?:TODO|FIXME|BUG)(?:\(.*?\))?[:\s]/i;
+const COMMENT_REGEX = /(?:TODO|FIXME)(?:\(.*?\))?[:\s]/i;
 
 function scanWindow(
   lines: string[],
