@@ -1,6 +1,6 @@
 {
   "name": "@devds1989/trush-core",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Core engine for t-rush and t-rush-mcp.",
   "type": "module",
   "main": "./dist/index.js",
