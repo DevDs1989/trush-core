@@ -13,6 +13,7 @@ export type TodoItem = {
   text: string;
   rawLine: string;
   author?: string;
+  age_days?: number;
 };
 
 export type RunRecord = {
