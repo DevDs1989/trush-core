@@ -22,16 +22,32 @@ const TODO_REGEX =
 
 const TODO_TYPE_REGEX = /(?:TODO|FIXME)/i;
 
-function getAuthor(filePath: string, line: number, cwd: string): string | undefined {
+function getBlameInfo(filePath: string, line: number, cwd: string): { author?: string, age_days?: number } {
   try {
     const rel = path.relative(cwd, filePath);
     const output = execSync(`git blame -L ${line},${line} --porcelain "${rel}"`, { cwd, stdio: 'pipe' }).toString();
-    const authorLine = output.split('\n').find(l => l.startsWith('author '));
-    if (authorLine && authorLine !== 'author Not Committed Yet') return authorLine.replace('author ', '').trim();
+    const lines = output.split('\n');
+    const authorLine = lines.find(l => l.startsWith('author '));
+    const authorTimeLine = lines.find(l => l.startsWith('author-time '));
+    
+    let author: string | undefined;
+    let age_days: number | undefined;
+
+    if (authorLine && authorLine !== 'author Not Committed Yet') {
+      author = authorLine.replace('author ', '').trim();
+    }
+    
+    if (authorTimeLine) {
+      const authorTime = parseInt(authorTimeLine.replace('author-time ', '').trim(), 10);
+      if (!isNaN(authorTime)) {
+        age_days = Math.floor((Date.now() / 1000 - authorTime) / 86400);
+      }
+    }
+    
+    return { author, age_days };
   } catch {
-    return undefined;
+    return {};
   }
-  return undefined;
 }
 
 const BINARY_EXTENSIONS = new Set([
@@ -108,13 +124,15 @@ function parseTodos(filePath: string, cwd: string): TodoItem[] {
     if (!typeMatch) return;
 
     const lineNum = index + 1;
+    const blameInfo = getBlameInfo(filePath, lineNum, cwd);
     items.push({
       type: typeMatch[0].toUpperCase() as TodoItem["type"],
       file: path.relative(cwd, filePath),
       line: lineNum,
       text: match[1].trim(),
       rawLine: rawLine.trim(),
-      author: getAuthor(filePath, lineNum, cwd),
+      author: blameInfo.author,
+      age_days: blameInfo.age_days,
     });
   });
 
